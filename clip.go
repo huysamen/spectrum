@@ -19,6 +19,10 @@ const (
 	LabBMax   = float64(127.0)
 	HSLMin    = float64(0.0)
 	HSLMax    = float64(1.0)
+	CMYMin    = float64(0.0)
+	CMYMax    = float64(1.0)
+	CMYKMin   = float64(0.0)
+	CMYKMax   = float64(1.0)
 )
 
 type colourVal interface {
@@ -65,4 +69,17 @@ func clipHSL(h, s, l float64) (float64, float64, float64) {
 	return clip(h, HSLMin, HSLMax),
 		clip(s, HSLMin, HSLMax),
 		clip(l, HSLMin, HSLMax)
+}
+
+func clipCMY(c, m, y float64) (float64, float64, float64) {
+	return clip(c, CMYMin, CMYMax),
+		clip(m, CMYMin, CMYMax),
+		clip(y, CMYMin, CMYMax)
+}
+
+func clipCMYK(c, m, y, k float64) (float64, float64, float64, float64) {
+	return clip(c, CMYKMin, CMYKMax),
+		clip(m, CMYKMin, CMYKMax),
+		clip(y, CMYKMin, CMYKMax),
+		clip(k, CMYKMin, CMYKMax)
 }
