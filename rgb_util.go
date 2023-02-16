@@ -1,9 +1,15 @@
 package spectrum
 
+import "math"
+
 // RGBToRGBui8 converts RGB to RGBui8.
 // RGB is in the range [0, 1], RGBui8 is in the range [0, 255].
 func RGBToRGBui8(r, g, b float64) (uint8, uint8, uint8) {
-	return clipRGBui8(uint8(r*255.0), uint8(g*255.0), uint8(b*255.0))
+	return clipRGBui8(
+		uint8(math.Round(r*255.0)),
+		uint8(math.Round(g*255.0)),
+		uint8(math.Round(b*255.0)),
+	)
 }
 
 // RGBui8ToRGB converts RGBui8 to RGB.
@@ -17,7 +23,9 @@ func RGBui8ToRGB(r, g, b uint8) (float64, float64, float64) {
 func RGBToRGBui32(r, g, b float64) uint32 {
 	r, g, b = clipRGB(r, g, b)
 
-	return uint32(r*255.0)<<16 | uint32(g*255.0)<<8 | uint32(b*255.0)
+	return uint32(math.Round(r*255.0))<<16 |
+		uint32(math.Round(g*255.0))<<8 |
+		uint32(math.Round(b*255.0))
 }
 
 // RGBui32ToRGB converts RGBui32 to RGB.

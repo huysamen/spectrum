@@ -6,4 +6,9 @@ to be easy to use and to be fast. It is also designed to be correct.
  - [x] Add CMY color space
  - [x] Add CMYK color space
  - [ ] Add LUV color space
- - [ ] Add more test colours
+ - [ ] Add Adobe RGB color space
+ - [ ] Add Hunter Lab color space
+ - [ ] Add YXY color space
+ - [x] Add all basic test colours
+ - [ ] Add all other test colours
+ - [ ] Add Pixel concept for type-safety and in-memory conversion

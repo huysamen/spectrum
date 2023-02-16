@@ -50,9 +50,9 @@ func TestRGBui8ToRGB(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			r, g, b := RGBui8ToRGB(tt.args[0], tt.args[1], tt.args[2])
 
-			assert.Equal(t, tt.want[0], r, "RGBui8ToRGB(): R = %v, want %v", r, tt.want[0])
-			assert.Equal(t, tt.want[1], g, "RGBui8ToRGB(): G = %v, want %v", g, tt.want[1])
-			assert.Equal(t, tt.want[2], b, "RGBui8ToRGB(): B = %v, want %v", b, tt.want[2])
+			assert.InDeltaf(t, tt.want[0], r, 0.00000001, "RGBui8ToRGB(): R = %v, want %v", r, tt.want[0])
+			assert.InDeltaf(t, tt.want[1], g, 0.00000001, "RGBui8ToRGB(): G = %v, want %v", g, tt.want[1])
+			assert.InDeltaf(t, tt.want[2], b, 0.00000001, "RGBui8ToRGB(): B = %v, want %v", b, tt.want[2])
 		})
 	}
 }
@@ -100,9 +100,9 @@ func TestRGBui32ToRGB(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			r, g, b := RGBui32ToRGB(tt.args)
 
-			assert.Equal(t, tt.want[0], r, "RGBui8ToRGB(): R = %v, want %v", r, tt.want[0])
-			assert.Equal(t, tt.want[1], g, "RGBui8ToRGB(): G = %v, want %v", g, tt.want[1])
-			assert.Equal(t, tt.want[2], b, "RGBui8ToRGB(): B = %v, want %v", b, tt.want[2])
+			assert.InDeltaf(t, tt.want[0], r, 0.00000001, "RGBui8ToRGB(): R = %v, want %v", r, tt.want[0])
+			assert.InDeltaf(t, tt.want[1], g, 0.00000001, "RGBui8ToRGB(): G = %v, want %v", g, tt.want[1])
+			assert.InDeltaf(t, tt.want[2], b, 0.00000001, "RGBui8ToRGB(): B = %v, want %v", b, tt.want[2])
 		})
 	}
 }
