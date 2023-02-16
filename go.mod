@@ -1,4 +1,4 @@
-module spectrum
+module github.com/huysamen/spectrum
 
 go 1.19
 
