@@ -10,12 +10,16 @@ func CMYToCMYK(_c, _m, _y float64) (c, m, y, k float64) {
 	k = math.Min(math.Min(_c, _m), _y)
 
 	if k == 1.0 {
-		return 0.0, 0.0, 0.0, 1.0
+		c, m, y, k = 0.0, 0.0, 0.0, 1.0
+
+		return
 	}
 
 	c = (_c - k) / (1.0 - k)
 	m = (_m - k) / (1.0 - k)
 	y = (_y - k) / (1.0 - k)
 
-	return clipCMYK(c, m, y, k)
+	c, m, y, k = clipCMYK(c, m, y, k)
+
+	return
 }

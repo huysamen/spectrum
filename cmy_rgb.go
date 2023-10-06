@@ -5,6 +5,7 @@ package spectrum
 // The RGB color is returned as a 3-tuple of floats in the range [0, 1].
 func CMYToRGB(c, m, y float64) (r, g, b float64) {
 	c, m, y = clipCMY(c, m, y)
+	r, g, b = clipRGB(1.0-c, 1.0-m, 1.0-y)
 
-	return clipRGB(1.0-c, 1.0-m, 1.0-y)
+	return
 }
