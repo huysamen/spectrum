@@ -1,8 +1,9 @@
 package spectrum
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestHSLToRGB(t *testing.T) {
@@ -24,9 +25,9 @@ func TestHSLToRGB(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			r, g, b := HSLToRGB(tt.args[0], tt.args[1], tt.args[2])
 
-			assert.InDeltaf(t, tt.want[0], r, 0.000001, "HSLToRGB(): R = %v, want %v", r, tt.want[0])
-			assert.InDeltaf(t, tt.want[1], g, 0.000001, "HSLToRGB(): G = %v, want %v", g, tt.want[1])
-			assert.InDeltaf(t, tt.want[2], b, 0.000001, "HSLToRGB(): B = %v, want %v", b, tt.want[2])
+			assert.InDeltaf(t, tt.want[0], r, 0.00000001, "HSLToRGB(): R = %v, want %v", r, tt.want[0])
+			assert.InDeltaf(t, tt.want[1], g, 0.00000001, "HSLToRGB(): G = %v, want %v", g, tt.want[1])
+			assert.InDeltaf(t, tt.want[2], b, 0.00000001, "HSLToRGB(): B = %v, want %v", b, tt.want[2])
 		})
 	}
 }

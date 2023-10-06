@@ -2,27 +2,46 @@ package spectrum
 
 import "math"
 
-func DeltaE(l1, a1, b1, l2, a2, b2 float64) float64 {
-	return math.Sqrt(
-		math.Pow(l1-l2, 2.0) +
-			math.Pow(a1-a2, 2.0) +
-			math.Pow(b1-b2, 2.0),
-	)
+func DeltaE(l1, a1, b1, l2, a2, b2 float64) (deltaE float64) {
+	l1, a1, b1 = clipLab(l1, a1, b1)
+	l2, a2, b2 = clipLab(l2, a2, b2)
+
+	deltaE = math.Sqrt(math.Pow(l1-l2, 2.0) + math.Pow(a1-a2, 2.0) + math.Pow(b1-b2, 2.0))
+
+	return
 }
 
 func DeltaE94(l1, a1, b1, l2, a2, b2 float64) (deltaE float64) {
-	return deltaE94WithApplication(l1, a1, b1, l2, a2, b2, 1.0, 0.045, 0.015)
+	l1, a1, b1 = clipLab(l1, a1, b1)
+	l2, a2, b2 = clipLab(l2, a2, b2)
+
+	deltaE = deltaE94WithApplication(l1, a1, b1, l2, a2, b2, 1.0, 0.045, 0.015)
+
+	return
 }
 
 func DeltaE94ForGraphicArts(l1, a1, b1, l2, a2, b2 float64) (deltaE float64) {
-	return deltaE94WithApplication(l1, a1, b1, l2, a2, b2, 1.0, 0.045, 0.015)
+	l1, a1, b1 = clipLab(l1, a1, b1)
+	l2, a2, b2 = clipLab(l2, a2, b2)
+
+	deltaE = deltaE94WithApplication(l1, a1, b1, l2, a2, b2, 1.0, 0.045, 0.015)
+
+	return
 }
 
 func DeltaE94ForTextiles(l1, a1, b1, l2, a2, b2 float64) (deltaE float64) {
-	return deltaE94WithApplication(l1, a1, b1, l2, a2, b2, 2.0, 0.048, 0.014)
+	l1, a1, b1 = clipLab(l1, a1, b1)
+	l2, a2, b2 = clipLab(l2, a2, b2)
+
+	deltaE = deltaE94WithApplication(l1, a1, b1, l2, a2, b2, 2.0, 0.048, 0.014)
+
+	return
 }
 
 func deltaE94WithApplication(l1, a1, b1, l2, a2, b2, kL, K1, K2 float64) (deltaE float64) {
+	l1, a1, b1 = clipLab(l1, a1, b1)
+	l2, a2, b2 = clipLab(l2, a2, b2)
+
 	kC, kH := 1.0, 1.0
 
 	deltaA := a1 - a2
@@ -49,11 +68,19 @@ func deltaE94WithApplication(l1, a1, b1, l2, a2, b2, kL, K1, K2 float64) (deltaE
 
 // DeltaE2000 is the CIEDE2000 color difference formula.
 // See http://www.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
-func DeltaE2000(L1, a1, b1, L2, a2, b2 float64) float64 {
-	return DeltaE2000WithWeighingFactors(L1, a1, b1, L2, a2, b2, 1.0, 1.0, 1.0)
+func DeltaE2000(l1, a1, b1, l2, a2, b2 float64) (deltaE float64) {
+	l1, a1, b1 = clipLab(l1, a1, b1)
+	l2, a2, b2 = clipLab(l2, a2, b2)
+
+	deltaE = DeltaE2000WithWeighingFactors(l1, a1, b1, l2, a2, b2, 1.0, 1.0, 1.0)
+
+	return
 }
 
-func DeltaE2000WithWeighingFactors(L1, a1, b1, L2, a2, b2, kL, kC, kH float64) float64 {
+func DeltaE2000WithWeighingFactors(l1, a1, b1, l2, a2, b2, kL, kC, kH float64) (deltaE float64) {
+	l1, a1, b1 = clipLab(l1, a1, b1)
+	l2, a2, b2 = clipLab(l2, a2, b2)
+
 	// 1 - Calculate C'i and h'i
 	//
 
@@ -101,7 +128,7 @@ func DeltaE2000WithWeighingFactors(L1, a1, b1, L2, a2, b2, kL, kC, kH float64) f
 	//
 
 	// (8)
-	dL := L2 - L1
+	dL := l2 - l1
 
 	// (9)
 	dC := C2_ - C1_
@@ -129,7 +156,7 @@ func DeltaE2000WithWeighingFactors(L1, a1, b1, L2, a2, b2, kL, kC, kH float64) f
 	//
 
 	// (12)
-	Lb := (L1 + L2) / 2.0
+	Lb := (l1 + l2) / 2.0
 
 	// (13)
 	Cb_ := (C1_ + C2_) / 2.0
@@ -173,11 +200,13 @@ func DeltaE2000WithWeighingFactors(L1, a1, b1, L2, a2, b2, kL, kC, kH float64) f
 	RT := -math.Sin(rad(2.0*dt)) * Rc
 
 	// (22)
-	deltaE := math.Sqrt(math.Pow(dL/(kL*SL), 2.0) + math.Pow(dC/(kC*SC), 2.0) + math.Pow(dH/(kH*SH), 2.0) + RT*(dC/(kC*SC))*(dH/(kH*SH)))
+	deltaE = math.Sqrt(math.Pow(dL/(kL*SL), 2.0) + math.Pow(dC/(kC*SC), 2.0) + math.Pow(dH/(kH*SH), 2.0) + RT*(dC/(kC*SC))*(dH/(kH*SH)))
 
-	return deltaE
+	return
 }
 
-func rad(deg float64) float64 {
-	return deg * math.Pi / 180.0
+func rad(deg float64) (r float64) {
+	r = deg * math.Pi / 180.0
+
+	return
 }

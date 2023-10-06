@@ -5,6 +5,8 @@ import "math"
 // RGBToHSL converts RGB to HSL.
 // RGB is in the range [0, 1], HSL is in the range [0, 1].
 func RGBToHSL(r, g, b float64) (h, s, l float64) {
+	r, g, b = clipRGB(r, g, b)
+
 	min := math.Min(math.Min(r, g), b)
 	max := math.Max(math.Max(r, g), b)
 	d := max - min
@@ -34,5 +36,7 @@ func RGBToHSL(r, g, b float64) (h, s, l float64) {
 		}
 	}
 
-	return clipHSL(h, s, l)
+	h, s, l = clipHSL(h, s, l)
+
+	return
 }

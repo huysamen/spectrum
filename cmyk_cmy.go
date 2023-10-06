@@ -1,9 +1,10 @@
 package spectrum
 
-func CMYKToCMY(c_, m_, y_, k_ float64) (c, m, y float64) {
-	return clipCMY(
-		(1.0-k_)*c_+k_,
-		(1.0-k_)*m_+k_,
-		(1.0-k_)*y_+k_,
-	)
+// CMYKToCMY converts a CMYK color to CMY.
+// The CMYK color is returned as a 4-tuple of floats in the range [0, 1].
+// The CMY color is represented as a 3-tuple of floats in the range [0, 1].
+func CMYKToCMY(_c, _m, _y, _k float64) (c, m, y float64) {
+	c, m, y = clipCMY(_c, _m, _y)
+
+	return clipCMY((1.0-_k)*_c+_k, (1.0-_k)*_m+_k, (1.0-_k)*_y+_k)
 }

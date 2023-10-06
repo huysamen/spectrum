@@ -5,6 +5,8 @@ import "math"
 // XYZToRGB converts XYZ to RGB.
 // XYZ is in the range [0, 1], RGB is in the range [0, 1].
 func XYZToRGB(x, y, z float64) (r, g, b float64) {
+	x, y, z = clipXYZ(x, y, z)
+
 	r = 3.240479*x - 1.537150*y - 0.498535*z
 	g = -0.969256*x + 1.875992*y + 0.041556*z
 	b = 0.055648*x - 0.204043*y + 1.057311*z
@@ -27,5 +29,7 @@ func XYZToRGB(x, y, z float64) (r, g, b float64) {
 		b *= math.Max(0, math.Min(1, 12.92))
 	}
 
-	return clipRGB(r, g, b)
+	r, g, b = clipRGB(r, g, b)
+
+	return
 }

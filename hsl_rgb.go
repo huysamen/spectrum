@@ -3,6 +3,8 @@ package spectrum
 // HSLToRGB converts HSL to RGB.
 // HSL is in the range [0, 1], RGB is in the range [0, 1].
 func HSLToRGB(h, s, l float64) (r, g, b float64) {
+	h, s, l = clipHSL(h, s, l)
+
 	if s == 0 {
 		return l, l, l
 	}

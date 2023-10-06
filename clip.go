@@ -25,11 +25,7 @@ const (
 	CMYKMax   = float64(1.0)
 )
 
-type colourVal interface {
-	uint8 | float64
-}
-
-func clip[T colourVal](v, min, max T) T {
+func clip[T uint8 | float64](v, min, max T) T {
 	if v < min {
 		return min
 	}
@@ -41,45 +37,30 @@ func clip[T colourVal](v, min, max T) T {
 	return v
 }
 
-func clipRGB(r, g, b float64) (float64, float64, float64) {
-	return clip(r, RGBMin, RGBMax),
-		clip(g, RGBMin, RGBMax),
-		clip(b, RGBMin, RGBMax)
+func clipRGB(_r, _g, _b float64) (r, g, b float64) {
+	return clip(_r, RGBMin, RGBMax), clip(_g, RGBMin, RGBMax), clip(_b, RGBMin, RGBMax)
 }
 
-func clipRGBui8(r, g, b uint8) (uint8, uint8, uint8) {
-	return clip(r, RGBui8Min, RGBui8Max),
-		clip(g, RGBui8Min, RGBui8Max),
-		clip(b, RGBui8Min, RGBui8Max)
+func clipRGBui8(_r, _g, _b uint8) (r, g, b uint8) {
+	return clip(_r, RGBui8Min, RGBui8Max), clip(_g, RGBui8Min, RGBui8Max), clip(_b, RGBui8Min, RGBui8Max)
 }
 
-func clipXYZ(x, y, z float64) (float64, float64, float64) {
-	return clip(x, XYZXMin, XYZXMax),
-		clip(y, XYZYMin, XYZYMax),
-		clip(z, XYZZMin, XYZZMax)
+func clipXYZ(_x, _y, _z float64) (x, y, z float64) {
+	return clip(_x, XYZXMin, XYZXMax), clip(_y, XYZYMin, XYZYMax), clip(_z, XYZZMin, XYZZMax)
 }
 
-func clipLab(l, a, b float64) (float64, float64, float64) {
-	return clip(l, LabLMin, LabLMax),
-		clip(a, LabAMin, LabAMax),
-		clip(b, LabBMin, LabBMax)
+func clipLab(_l, _a, _b float64) (l, a, b float64) {
+	return clip(_l, LabLMin, LabLMax), clip(_a, LabAMin, LabAMax), clip(_b, LabBMin, LabBMax)
 }
 
-func clipHSL(h, s, l float64) (float64, float64, float64) {
-	return clip(h, HSLMin, HSLMax),
-		clip(s, HSLMin, HSLMax),
-		clip(l, HSLMin, HSLMax)
+func clipHSL(_h, _s, _l float64) (h, s, l float64) {
+	return clip(_h, HSLMin, HSLMax), clip(_s, HSLMin, HSLMax), clip(_l, HSLMin, HSLMax)
 }
 
-func clipCMY(c, m, y float64) (float64, float64, float64) {
-	return clip(c, CMYMin, CMYMax),
-		clip(m, CMYMin, CMYMax),
-		clip(y, CMYMin, CMYMax)
+func clipCMY(_c, _m, _y float64) (c, m, y float64) {
+	return clip(_c, CMYMin, CMYMax), clip(_m, CMYMin, CMYMax), clip(_y, CMYMin, CMYMax)
 }
 
-func clipCMYK(c, m, y, k float64) (float64, float64, float64, float64) {
-	return clip(c, CMYKMin, CMYKMax),
-		clip(m, CMYKMin, CMYKMax),
-		clip(y, CMYKMin, CMYKMax),
-		clip(k, CMYKMin, CMYKMax)
+func clipCMYK(_c, _m, _y, _k float64) (c, m, y, k float64) {
+	return clip(_c, CMYKMin, CMYKMax), clip(_m, CMYKMin, CMYKMax), clip(_y, CMYKMin, CMYKMax), clip(_k, CMYKMin, CMYKMax)
 }
