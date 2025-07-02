@@ -36,8 +36,8 @@ func TestClosestColourNameHex(t *testing.T) {
 		{"Pale Lime", "#C2F970", "Pale Lime"},
 		{"Charcoal Grey", "#44344F", "Charcoal Grey"},
 		{"Dusk", "#564D80", "Dusk"},
-		{"Light Grey Blue", "#98A6D4", "Light Grey Blue"},
-		{"Very Light Green", "#D3FCD5", "Very Light Green"},
+		{"Powder Blue", "#98A6D4", "Powder Blue"},
+		{"Nyanza", "#D3FCD5", "Nyanza"},
 	}
 
 	for _, tt := range tests {
