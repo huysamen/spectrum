@@ -10,3 +10,4 @@
 *.dylib
 *.test
 *.out
+cmd/

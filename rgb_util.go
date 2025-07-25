@@ -36,3 +36,55 @@ func RGBui32ToRGB(rgb uint32) (r, g, b float64) {
 
 	return
 }
+
+// RGBui8Interpolate performs linear interpolation between two RGBui8 colors.
+func RGBui8Interpolate(r1, g1, b1, r2, g2, b2 uint8, t float64) (r, g, b uint8) {
+	r1, g1, b1 = clipRGBui8(r1, g1, b1)
+	r2, g2, b2 = clipRGBui8(r2, g2, b2)
+
+	t = math.Max(0, math.Min(1, t))
+
+	r = uint8(float64(r1)*(1-t) + float64(r2)*t)
+	g = uint8(float64(g1)*(1-t) + float64(g2)*t)
+	b = uint8(float64(b1)*(1-t) + float64(b2)*t)
+
+	return
+}
+
+// RGBui8GenerateTints generates a specified number of tints by interpolating from the base color to white.
+// Returns a slice of RGB uint8 color tuples, ordered from lightest to darkest.
+func RGBui8GenerateTints(baseR, baseG, baseB uint8, count int) [][3]uint8 {
+	if count <= 0 {
+		return nil
+	}
+
+	tints := make([][3]uint8, count)
+
+	for i := 0; i < count; i++ {
+		// Calculate interpolation factor: starts high (closer to white) and decreases
+		t := float64(count-i) / float64(count+1)
+		r, g, b := RGBui8Interpolate(baseR, baseG, baseB, 255, 255, 255, t)
+		tints[i] = [3]uint8{r, g, b}
+	}
+
+	return tints
+}
+
+// RGBui8GenerateShades generates a specified number of shades by interpolating from the base color to black.
+// Returns a slice of RGB uint8 color tuples, ordered from lightest to darkest.
+func RGBui8GenerateShades(baseR, baseG, baseB uint8, count int) [][3]uint8 {
+	if count <= 0 {
+		return nil
+	}
+
+	shades := make([][3]uint8, count)
+
+	for i := 0; i < count; i++ {
+		// Calculate interpolation factor: starts low (closer to base) and increases
+		t := float64(i+1) / float64(count+1)
+		r, g, b := RGBui8Interpolate(baseR, baseG, baseB, 0, 0, 0, t)
+		shades[i] = [3]uint8{r, g, b}
+	}
+
+	return shades
+}
